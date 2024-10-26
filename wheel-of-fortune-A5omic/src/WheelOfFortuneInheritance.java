@@ -14,7 +14,7 @@ public abstract class WheelOfFortuneInheritance extends GuessingGame {
 
 
     /**
-     * Constructor initializes the game state with phrases from a file
+     * Constructor
      */
     public WheelOfFortuneInheritance() {
         super("phrases.txt");
@@ -24,7 +24,7 @@ public abstract class WheelOfFortuneInheritance extends GuessingGame {
 
 
     /**
-     * gets a random phrase form the text file
+     * Reads phrases from file
      */
     protected List<String> readPhrasesFromFile(String fileName) {
         try {
@@ -51,7 +51,7 @@ public abstract class WheelOfFortuneInheritance extends GuessingGame {
 
 
     /**
-     * Generates the hidden version of the phrase
+     * Generates the hidden version
      */
     protected String generateHiddenPhrase(String phrase) {
         StringBuilder hiddenText = new StringBuilder();
@@ -83,20 +83,20 @@ public abstract class WheelOfFortuneInheritance extends GuessingGame {
 
 
     /**
-     * Abstract method to get the next guess from a player
+     * Get the next guess
      */
     protected abstract char getGuess(String previousGuesses);
 
 
     /**
-     * Abstract method to handle the game play
+     * Handle the game play
      */
     @Override
     public abstract GameRecord play();
 
 
     /**
-     * Checks if the next game should be played
+     * Checks if the next game
      */
     @Override
     public abstract boolean playNext();

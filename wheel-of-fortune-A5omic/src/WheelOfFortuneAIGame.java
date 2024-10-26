@@ -1,101 +1,59 @@
-import java.util.List;
+import java.util.Random;
 
 public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
-    private final List<WheelOfFortunePlayer> players;
-    private int currentPlayerIndex;
+    private Random random;
 
     /**
-     * Constructor to list of AI players
+     * Constructor initializes the AI game.
      */
-    public WheelOfFortuneAIGame(List<WheelOfFortunePlayer> players) {
+    public WheelOfFortuneAIGame() {
         super();
-        this.players = players;
-        this.currentPlayerIndex = 0;
+        this.random = new Random();
     }
 
     /**
-     * Get the next guess from the current AI player
+     * Get the next guess from the AI.
      */
     @Override
     protected char getGuess(String previousGuesses) {
-        WheelOfFortunePlayer player = players.get(currentPlayerIndex);
-        return player.nextGuess(previousGuesses, hiddenPhrase.toString());
+        // Generate a random guess from 'a' to 'z'
+        char guess;
+        do {
+            guess = (char) ('a' + random.nextInt(26)); // Random letter from 'a' to 'z'
+        } while (previousGuesses.indexOf(guess) != -1); // Ensure it's a new guess
+        return guess;
     }
 
-    /**
-     * Plays a single game with the AI player
-     */
     @Override
-    public GameRecord play() {
-        // Initialize game state
-        phrase = selectRandomPhrase();
-        if (phrase == null) {
-            System.out.println("No more phrases available.");
-            return null;
-        }
-        hiddenPhrase = new StringBuilder(generateHiddenPhrase(phrase));
-        previousGuesses.clear();
-
-        int lives = 5;
-        WheelOfFortunePlayer currentPlayer = players.get(currentPlayerIndex);
-        currentPlayer.reset(); // Reset player for a new game
-
-        while (hiddenPhrase.toString().contains("*") && lives > 0) {
-            System.out.println("Lives Left: " + lives);
-            System.out.println("The Hidden Phrase: " + hiddenPhrase);
-
-            char guess = getGuess(previousGuesses.toString());
-            if (!previousGuesses.contains(guess)) {
-                lives = processGuess(guess, lives);
-            }
-        }
-
-        // Calculate score: 100 if guessed correctly, otherwise partial score based on revealed characters
-        int revealedLetters = 0;
-        for (int i = 0; i < hiddenPhrase.length(); i++) {
-            if (hiddenPhrase.charAt(i) == phrase.charAt(i)) {
-                revealedLetters++;
-            }
-        }
-        int maxLetters = phrase.replaceAll("[^a-zA-Z]", "").length(); // Count only alphabet letters in the phrase
-        int score = (revealedLetters == maxLetters) ? 100 : (int) ((double) revealedLetters / maxLetters * 100);
-
-        // Return the GameRecord with calculated score
-        GameRecord record = new GameRecord(score, currentPlayer.playerId());
-
-        // Move to the next player for the next game
-        currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-        return record;
+    protected String getGuess() {
+        // Not needed for AI; instead, we use the method with previous guesses context
+        return "";
     }
 
     /**
-     * For a new game it will return true or false
-     */
-    @Override
-    public boolean playNext() {
-        return !phrases.isEmpty();
-    }
-
-    /**
-     * Main method to run a set of games with AI players
+     * Main method to run the AI game
      */
     public static void main(String[] args) {
-        // Create a list of AI players
-        List<WheelOfFortunePlayer> aiPlayers = List.of(
-                new RandomGuessPlayer("AI_Player_1"),
-                new RandomGuessPlayer("AI_Player_2"),
-                new RandomGuessPlayer("AI_Player_3")
-        );
-
-        // Create and run the AI game
-        WheelOfFortuneAIGame aiGame = new WheelOfFortuneAIGame(aiPlayers);
+        WheelOfFortuneAIGame aiGame = new WheelOfFortuneAIGame();
         AllGamesRecord record = aiGame.playAll();
 
-        // Display results using AllGamesRecord methods
-        System.out.println("Average Score: " + record.average());
-        System.out.println("Top 3 Games: ");
+        // Display game statistics
+        System.out.println("AI Game - Average Score: " + record.average());
+        System.out.println("AI Game - Top Scores: ");
         for (GameRecord gr : record.highGameList(3)) {
             System.out.println("Player: " + gr.getPlayerId() + ", Score: " + gr.getScore());
         }
+    }
+
+    @Override
+    public GameRecord play() {
+        // Use the same play logic as in WheelOfFortuneUserGame or customize for AI
+        return super.play();
+    }
+
+    @Override
+    public boolean playNext() {
+        // AI decision to play another round, can be automatic or controlled
+        return false;
     }
 }

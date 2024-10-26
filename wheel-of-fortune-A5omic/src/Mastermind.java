@@ -6,19 +6,20 @@ public class Mastermind extends GuessingGame {
     private static final int CODESIZE = 4;
     private static final String COLORS = "RGBYOP"; // R, G, B, Y, O, P
     private String secretCode;
-
+    private Scanner scanner;
 
     /**
-     * Constructos
+     * Constructor
      */
     public Mastermind() {
         super(null);
+        this.scanner = new Scanner(System.in);
         generateSecretCode();
     }
 
 
     /**
-     * Generates a random code of colors
+     * Generates a random secret code using the defined colors
      */
     private void generateSecretCode() {
         Random random = new Random();
@@ -31,12 +32,11 @@ public class Mastermind extends GuessingGame {
 
 
     /**
-     * Get thr guess from the user
+     * Get the guess from the user.
      */
     @Override
     protected String getGuess() {
         System.out.print("Enter your guess (e.g., 'RGRY'): ");
-        Scanner scanner = null;
         String guess = scanner.nextLine().toUpperCase().trim();
         if (guess.length() == CODESIZE && guess.chars().allMatch(c -> COLORS.indexOf(c) >= 0)) {
             return guess;
@@ -46,9 +46,19 @@ public class Mastermind extends GuessingGame {
         }
     }
 
+    /**
+     * Checks if the user wants to play another game
+     */
+    @Override
+    public boolean playNext() {
+        System.out.print("Do you want to play another game? (yes/no): ");
+        String response = scanner.nextLine().trim().toLowerCase();
+        return response.equals("yes") || response.equals("y");
+    }
+
 
     /**
-     * Its time to play the game
+     * Plays the game
      */
     @Override
     public GameRecord play() {
@@ -78,19 +88,7 @@ public class Mastermind extends GuessingGame {
 
 
     /**
-     * See if the user wants to play again
-     */
-    @Override
-    public boolean playNext() {
-        System.out.print("Do you want to play another game? (yes/no): ");
-        Scanner scanner = null;
-        String response = scanner.nextLine().trim().toLowerCase();
-        return response.equals("yes") || response.equals("y");
-    }
-
-
-    /**
-     * Checks the number of matches
+     * Checks the number of exact matches
      */
     private int checkExacts(StringBuilder secretSB, StringBuilder guessSB) {
         int exacts = 0;
@@ -106,7 +104,7 @@ public class Mastermind extends GuessingGame {
 
 
     /**
-     * Checks the partial correct guesses
+     * Checks the number of partial matches
      */
     private int checkPartials(StringBuilder secretSB, StringBuilder guessSB) {
         int partials = 0;
@@ -125,7 +123,7 @@ public class Mastermind extends GuessingGame {
 
 
     /**
-     * Main method to run the Mastermind game.
+     * Main method to run the Mastermind
      */
     public static void main(String[] args) {
         Mastermind game = new Mastermind();
@@ -133,7 +131,6 @@ public class Mastermind extends GuessingGame {
 
         // Display game statistics
         System.out.println("=== Mastermind Game Summary ===");
-//        System.out.println("Total Games Played: " + record.size());
         System.out.println("Average Score: " + record.average());
 
         // Display top 3 scores across all games

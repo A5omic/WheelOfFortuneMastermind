@@ -1,7 +1,9 @@
 import java.util.Scanner;
 
 public class WheelOfFortuneUserGame extends WheelOfFortuneInheritance {
+
     private Scanner scanner;
+
 
     /**
      * Constructor for the game
@@ -52,6 +54,7 @@ public class WheelOfFortuneUserGame extends WheelOfFortuneInheritance {
     protected String getGuess() {
         return "";
     }
+
 
     /**
      * Code to start the game with lives and call other methods
