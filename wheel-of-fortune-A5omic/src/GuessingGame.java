@@ -5,23 +5,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Abstract superclass for guessing games like WheelOfFortune and Mastermind.
- */
 public abstract class GuessingGame extends Game {
 
-    protected String phrase;  // Represents the target or hidden item (phrase/code)
-    protected StringBuilder hiddenPhrase;  // Represents the current guessed state
-    protected List<Character> previousGuesses;  // Tracks guesses made by the player
-    protected List<String> gameData;  // Holds the data for the game (phrases, codes, etc.)
+    protected String phrase;
+    protected StringBuilder hiddenPhrase;
+    protected List<Character> previousGuesses;
+    protected List<String> gameData;
+
 
     /**
      * Constructor initializes the game state, loading data from a file if necessary.
      */
     public GuessingGame(String fileName) {
         this.previousGuesses = new ArrayList<>();
-        this.gameData = readDataFromFile(fileName);
+        if (fileName != null) {
+            this.gameData = readDataFromFile(fileName);
+        } else {
+            this.gameData = new ArrayList<>(); // No file, initialize empty data
+        }
     }
+
 
     /**
      * Reads data (phrases or codes) from a file.
@@ -29,14 +32,15 @@ public abstract class GuessingGame extends Game {
     protected List<String> readDataFromFile(String fileName) {
         try {
             return Files.readAllLines(Paths.get(fileName));
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
             return new ArrayList<>();
         }
     }
 
+
     /**
-     * Selects a random item from the game data.
+     * Selects a random item
      */
     protected String selectRandomItem() {
         if (gameData.isEmpty()) {
@@ -48,8 +52,9 @@ public abstract class GuessingGame extends Game {
         return selectedItem;
     }
 
+
     /**
-     * Generates a hidden version of a target item using a masking character ('*' for letters).
+     * Generates a hidden version
      */
     protected String generateHiddenVersion(String item) {
         StringBuilder hiddenText = new StringBuilder();
@@ -63,8 +68,9 @@ public abstract class GuessingGame extends Game {
         return hiddenText.toString();
     }
 
+
     /**
-     * Processes a player's guess, updating the game state if correct.
+     * Processes a player's guess
      */
     protected int processGuess(char guess, int lives) {
         boolean correctGuess = false;
@@ -78,19 +84,22 @@ public abstract class GuessingGame extends Game {
         return correctGuess ? lives : lives - 1;
     }
 
+
     /**
-     * Abstract method to get the next guess from a player.
+     * Abstract method to get the next
      */
     protected abstract String getGuess();
 
+
     /**
-     * Abstract method to play a single game.
+     * Play a single game
      */
     @Override
     public abstract GameRecord play();
 
+
     /**
-     * Abstract method to check if the game should continue.
+     * Check if the game should continue
      */
     @Override
     public abstract boolean playNext();
