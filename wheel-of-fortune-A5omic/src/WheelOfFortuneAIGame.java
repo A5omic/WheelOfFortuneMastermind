@@ -1,18 +1,21 @@
 import java.util.Random;
 
 public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
+
     private Random random;
 
+
     /**
-     * Constructor initializes the AI game.
+     * Constructor initializes the AI game
      */
     public WheelOfFortuneAIGame() {
         super();
         this.random = new Random();
     }
 
+
     /**
-     * Get the next guess from the AI.
+     * Get the next guess from the AI
      */
     @Override
     protected char getGuess(String previousGuesses) {
@@ -24,11 +27,13 @@ public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
         return guess;
     }
 
+
     @Override
     protected String getGuess() {
         // Not needed for AI; instead, we use the method with previous guesses context
         return "";
     }
+
 
     /**
      * Main method to run the AI game
@@ -45,15 +50,61 @@ public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
         }
     }
 
+
+    /**
+     * Play a single game with the AI
+     */
     @Override
     public GameRecord play() {
-        // Use the same play logic as in WheelOfFortuneUserGame or customize for AI
-        return super.play();
+        // Initialize the game state
+        phrase = selectRandomPhrase();
+        if (phrase == null) {
+            System.out.println("No more phrases available.");
+            return null;
+        }
+        hiddenPhrase = new StringBuilder(generateHiddenPhrase(phrase));
+        previousGuesses.clear();
+
+        int lives = 5;
+        while (hiddenPhrase.toString().contains("*") && lives > 0) {
+            System.out.println("Lives Left: " + lives);
+            System.out.println("The Hidden Phrase: " + hiddenPhrase);
+            char guess = getGuess(previousGuesses.toString());
+            if (!previousGuesses.contains(guess)) {
+                lives = processGuess(guess, lives);
+            } else {
+                System.out.println("AI has already guessed that letter: " + guess);
+            }
+        }
+
+        // Show the final results
+        if (!hiddenPhrase.toString().contains("*")) {
+            System.out.println("AI successfully guessed the phrase: " + phrase);
+        } else {
+            System.out.println("AI ran out of lives. The correct phrase was: " + phrase);
+        }
+
+        // Calculate the score based on the final state of the hidden phrase
+        int revealedLetters = 0;
+        for (int i = 0; i < hiddenPhrase.length(); i++) {
+            if (hiddenPhrase.charAt(i) == phrase.charAt(i)) {
+                revealedLetters++;
+            }
+        }
+        int maxLetters = phrase.replaceAll("[^a-zA-Z]", "").length(); // Count only alphabet letters in the phrase
+        int score = (revealedLetters == maxLetters) ? 100 : (int) ((double) revealedLetters / maxLetters * 100);
+
+        // Return a GameRecord with the calculated score
+        return new GameRecord(score, "AI_Player");
     }
 
+
+    /**
+     * AI decision to play another game
+     */
     @Override
     public boolean playNext() {
-        // AI decision to play another round, can be automatic or controlled
+        // Automatically end after one game for AI.
         return false;
     }
 }
