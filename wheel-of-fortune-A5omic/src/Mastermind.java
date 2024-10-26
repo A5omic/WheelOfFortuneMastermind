@@ -4,9 +4,11 @@ import java.util.Scanner;
 
 public class Mastermind extends GuessingGame {
     private static final int CODESIZE = 4;
-    private static final String COLORS = "RGBYOP"; // R, G, B, Y, O, P
+    private static final int MAX_ATTEMPTS = 10;
+    private static final String COLORS = "RGBY"; // R, G, B, Y, O, P
     private String secretCode;
-    private Scanner scanner;
+    private final Scanner scanner;
+
 
     /**
      * Constructor
@@ -46,6 +48,7 @@ public class Mastermind extends GuessingGame {
         }
     }
 
+
     /**
      * Checks if the user wants to play another game
      */
@@ -66,7 +69,11 @@ public class Mastermind extends GuessingGame {
         int attempts = 0;
         boolean won = false;
 
-        while (attempts < 10 && !won) { // Allow up to 10 attempts
+        while (attempts < MAX_ATTEMPTS && !won) {
+            // Display remaining lives
+            int remainingLives = MAX_ATTEMPTS - attempts;
+            System.out.println("Lives Left: " + remainingLives);
+
             String guess = getGuess();
             attempts++;
 
@@ -83,7 +90,7 @@ public class Mastermind extends GuessingGame {
 
         int score = won ? 100 : 0;
         System.out.println("The secret code was: " + secretCode);
-        return new GameRecord(score, "User");
+        return new GameRecord(score, "User1");
     }
 
 
@@ -121,7 +128,7 @@ public class Mastermind extends GuessingGame {
         return partials;
     }
 
-
+    
     /**
      * Main method to run the Mastermind
      */
