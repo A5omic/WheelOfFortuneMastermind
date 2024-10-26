@@ -48,6 +48,11 @@ public class WheelOfFortuneUserGame extends WheelOfFortuneInheritance {
     }
 
 
+    @Override
+    protected String getGuess() {
+        return "";
+    }
+
     /**
      * Code to start the game with lives and call other methods
      */

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public abstract class WheelOfFortuneInheritance extends Game {
+public abstract class WheelOfFortuneInheritance extends GuessingGame {
 
     protected String phrase;
     protected StringBuilder hiddenPhrase;
@@ -17,6 +17,7 @@ public abstract class WheelOfFortuneInheritance extends Game {
      * Constructor initializes the game state with phrases from a file
      */
     public WheelOfFortuneInheritance() {
+        super("phrases.txt");
         this.previousGuesses = new ArrayList<>();
         this.phrases = readPhrasesFromFile("phrases.txt");
     }
