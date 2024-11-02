@@ -36,4 +36,28 @@ public class GameRecord implements Comparable<GameRecord> {
     public int compareTo(GameRecord other) {
         return Integer.compare(other.score, this.score);
     }
+
+
+    /**
+     * Overriding the toString for rubric and if needed to print for debug
+     */
+    @Override
+    public String toString() {
+        return "GameRecord{" +
+                "score=" + score +
+                ", playerId='" + playerId + '\'' +
+                '}';
+    }
+
+
+    /**
+     * Overriding the equals for rubric and if needed for debug
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        GameRecord that = (GameRecord) obj;
+        return score == that.score && playerId.equals(that.playerId);
+    }
 }

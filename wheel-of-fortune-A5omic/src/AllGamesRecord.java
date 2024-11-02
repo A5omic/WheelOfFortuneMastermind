@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,7 +52,7 @@ public class AllGamesRecord {
      */
     public List<GameRecord> highGameList(int n) {
         return records.stream()
-                .sorted()
+                .sorted(Comparator.reverseOrder())
                 .limit(n)
                 .collect(Collectors.toList());
     }
@@ -63,8 +64,31 @@ public class AllGamesRecord {
     public List<GameRecord> highGameList(String playerId, int n) {
         return records.stream()
                 .filter(record -> record.getPlayerId().equals(playerId))
-                .sorted()
+                .sorted(Comparator.reverseOrder())
                 .limit(n)
                 .collect(Collectors.toList());
+    }
+
+
+    /**
+     * Overriding the toString for rubric and if needed to print for debug
+     */
+    @Override
+    public String toString() {
+        return "AllGamesRecord{" +
+                "records=" + records +
+                '}';
+    }
+
+
+    /**
+     * Overriding the equals for rubric and if needed for debug
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        AllGamesRecord that = (AllGamesRecord) obj;
+        return records.equals(that.records);
     }
 }

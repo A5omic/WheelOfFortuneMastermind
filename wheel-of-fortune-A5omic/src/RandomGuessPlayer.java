@@ -3,51 +3,80 @@ import java.util.Random;
 import java.util.Set;
 
 public class RandomGuessPlayer implements WheelOfFortunePlayer {
-    private String id;
-    private Set<Character> previousGuesses;
-    private Random random;
+
+    private final String playerId;
+    private final Random random;
+    private final Set<Character> guessedLetters;
+    private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
 
     /**
-     * Constructor for the random player guess
+     * Constructor
      */
-    public RandomGuessPlayer(String id) {
-        this.id = id;
-        this.previousGuesses = new HashSet<>();
+    public RandomGuessPlayer(String playerId) {
+        this.playerId = playerId;
         this.random = new Random();
+        this.guessedLetters = new HashSet<>();
     }
 
 
     /**
-     * Returns the next random guess
+     * Generates a random guess by selecting a random letter
      */
     @Override
     public char nextGuess(String previousGuesses, String hiddenPhrase) {
+        if (guessedLetters.size() >= ALPHABET.length()) {
+            return '\0';  // No more letters to guess
+        }
+
         char guess;
         do {
-            guess = (char) ('a' + random.nextInt(26)); // Random letter from 'a' to 'z'
-        } while (this.previousGuesses.contains(guess));
+            guess = ALPHABET.charAt(random.nextInt(ALPHABET.length()));
+        } while (previousGuesses.indexOf(guess) != -1 || guessedLetters.contains(guess));
 
-        // Add to the set of guessed letters to avoid repeating
-        this.previousGuesses.add(guess);
+        guessedLetters.add(guess);
         return guess;
     }
 
 
     /**
-     * Returns the player id
+     * Returns the player's id
      */
     @Override
     public String playerId() {
-        return id;
+        return playerId;
     }
 
 
     /**
-     * Resets the player guesses for a new game
+     * Resets the player's guessed letters for a new game
      */
     @Override
     public void reset() {
-        previousGuesses.clear();
+        guessedLetters.clear();
+    }
+
+
+    /**
+     * Overriding the toString for rubric and if needed to print for debug
+     */
+    @Override
+    public String toString() {
+        return "RandomGuessPlayer{" +
+                "playerId='" + playerId + '\'' +
+                ", guessedLetters=" + guessedLetters +
+                '}';
+    }
+
+
+    /**
+     * Overriding the equals for rubric and if needed for debug
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RandomGuessPlayer that = (RandomGuessPlayer) o;
+        return playerId.equals(that.playerId) && guessedLetters.equals(that.guessedLetters);
     }
 }

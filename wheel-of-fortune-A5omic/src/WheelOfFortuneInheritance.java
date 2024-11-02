@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public abstract class WheelOfFortuneInheritance extends GuessingGame {
+public abstract class WheelOfFortuneInheritance extends Game {
 
     protected String phrase;
     protected StringBuilder hiddenPhrase;
@@ -14,17 +14,16 @@ public abstract class WheelOfFortuneInheritance extends GuessingGame {
 
 
     /**
-     * Constructor
+     * Constructor initializes the game state with phrases from a file
      */
     public WheelOfFortuneInheritance() {
-        super("phrases.txt");
         this.previousGuesses = new ArrayList<>();
         this.phrases = readPhrasesFromFile("phrases.txt");
     }
 
 
     /**
-     * Reads phrases from file
+     * gets a random phrase form the text file
      */
     protected List<String> readPhrasesFromFile(String fileName) {
         try {
@@ -45,13 +44,12 @@ public abstract class WheelOfFortuneInheritance extends GuessingGame {
         }
         Random rand = new Random();
         int index = rand.nextInt(phrases.size());
-        String selectedPhrase = phrases.remove(index); // Remove to prevent reuse
-        return selectedPhrase;
+        return phrases.remove(index);
     }
 
 
     /**
-     * Generates the hidden version
+     * Generates the hidden version of the phrase
      */
     protected String generateHiddenPhrase(String phrase) {
         StringBuilder hiddenText = new StringBuilder();
@@ -70,6 +68,10 @@ public abstract class WheelOfFortuneInheritance extends GuessingGame {
      * Processes a user's guess
      */
     protected int processGuess(char guess, int lives) {
+        if (previousGuesses.contains(guess)) {
+            System.out.println("You've already guessed that letter, no lives were lost!");
+            return lives;
+        }
         boolean correctGuess = false;
         for (int i = 0; i < phrase.length(); i++) {
             if (Character.toLowerCase(phrase.charAt(i)) == guess) {
@@ -83,21 +85,34 @@ public abstract class WheelOfFortuneInheritance extends GuessingGame {
 
 
     /**
-     * Get the next guess
+     * Abstract method to get the next guess from a player
      */
     protected abstract char getGuess(String previousGuesses);
 
 
     /**
-     * Handle the game play
+     * Abstract method to handle the game play
      */
     @Override
     public abstract GameRecord play();
 
 
     /**
-     * Checks if the next game
+     * Checks if the next game should be played
      */
     @Override
     public abstract boolean playNext();
+
+
+    /**
+     * Overriding the toString for rubric and if needed to print for debug
+     */
+    @Override
+    public String toString() {
+        return "WheelOfFortuneInheritance{" +
+                "phrase='" + phrase + '\'' +
+                ", hiddenPhrase=" + hiddenPhrase +
+                ", previousGuesses=" + previousGuesses +
+                '}';
+    }
 }

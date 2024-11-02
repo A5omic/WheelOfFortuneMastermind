@@ -2,7 +2,8 @@ import java.util.Scanner;
 
 public class WheelOfFortuneUserGame extends WheelOfFortuneInheritance {
 
-    private Scanner scanner;
+    private final Scanner scanner;
+    private boolean isFirstGame;
 
 
     /**
@@ -11,6 +12,7 @@ public class WheelOfFortuneUserGame extends WheelOfFortuneInheritance {
     public WheelOfFortuneUserGame() {
         super();
         this.scanner = new Scanner(System.in);
+        this.isFirstGame = true;
     }
 
 
@@ -27,6 +29,7 @@ public class WheelOfFortuneUserGame extends WheelOfFortuneInheritance {
         for (GameRecord gr : record.highGameList(3)) {
             System.out.println("Player: " + gr.getPlayerId() + ", Score: " + gr.getScore());
         }
+        userGame.scanner.close();
     }
 
 
@@ -37,7 +40,8 @@ public class WheelOfFortuneUserGame extends WheelOfFortuneInheritance {
     protected char getGuess(String previousGuesses) {
         char userEntered = ' ';
         while (true) {
-            System.out.print("Guess A Letter: ");
+            System.out.println("Previous Guesses: " + previousGuesses);
+            System.out.print("Guess a Letter: ");
             String userInput = scanner.nextLine();
             if (userInput.length() == 1 && Character.isLetter(userInput.charAt(0))) {
                 userEntered = Character.toLowerCase(userInput.charAt(0));
@@ -50,21 +54,14 @@ public class WheelOfFortuneUserGame extends WheelOfFortuneInheritance {
     }
 
 
-    @Override
-    protected String getGuess() {
-        return "";
-    }
-
-
     /**
      * Code to start the game with lives and call other methods
      */
     @Override
     public GameRecord play() {
-        // Initialize the game state
         phrase = selectRandomPhrase();
         if (phrase == null) {
-            System.out.println("No more phrases available.");
+            System.out.println("No more phrases available. Ending game.");
             return null;
         }
         hiddenPhrase = new StringBuilder(generateHiddenPhrase(phrase));
@@ -109,8 +106,40 @@ public class WheelOfFortuneUserGame extends WheelOfFortuneInheritance {
      */
     @Override
     public boolean playNext() {
+        if (isFirstGame) {
+            isFirstGame = false;
+            return true;
+        }
         System.out.print("Do you want to play another game? (yes/no): ");
         String response = scanner.nextLine().trim().toLowerCase();
         return response.equals("yes") || response.equals("y");
+    }
+
+
+    /**
+     * Overriding the toString for rubric and if needed to print for debug
+     */
+    @Override
+    public String toString() {
+        return "WheelOfFortuneUserGame{" +
+                "phrase='" + phrase + '\'' +
+                ", hiddenPhrase=" + hiddenPhrase +
+                ", previousGuesses=" + previousGuesses +
+                ", remainingPhrases=" + phrases.size() +
+                '}';
+    }
+
+
+    /**
+     * Overriding the equals for rubric and if needed for debug
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        WheelOfFortuneUserGame that = (WheelOfFortuneUserGame) obj;
+        return phrase.equals(that.phrase) &&
+                hiddenPhrase.toString().equals(that.hiddenPhrase.toString()) &&
+                previousGuesses.equals(that.previousGuesses);
     }
 }
