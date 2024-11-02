@@ -7,7 +7,7 @@ public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
 
 
     /**
-     * Default constructor with a single default AI player
+     * Default constructor with a single default AI player.
      */
     public WheelOfFortuneAIGame() {
         this(List.of(new RandomGuessPlayer("Default_AI_Player")));
@@ -15,7 +15,7 @@ public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
 
 
     /**
-     * Constructor with a single specified AI player
+     * Constructor
      */
     public WheelOfFortuneAIGame(WheelOfFortunePlayer player) {
         this(List.of(player));
@@ -33,12 +33,22 @@ public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
 
 
     /**
-     * Get the next guess from the current AI player
+     * Gets the next guess from the current AI player
      */
     @Override
     protected char getGuess(String previousGuesses) {
         WheelOfFortunePlayer player = players.get(currentPlayerIndex);
         return player.nextGuess(previousGuesses, hiddenPhrase.toString());
+    }
+
+
+    /**
+     * Get the next guess from the current AI player
+     */
+    @Override
+    protected String getGuess() {
+        WheelOfFortunePlayer player = players.get(currentPlayerIndex);
+        return String.valueOf(player.nextGuess(previousGuesses.toString(), hiddenPhrase.toString()));
     }
 
 
@@ -53,7 +63,7 @@ public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
             System.out.println("No more phrases available.");
             return null;
         }
-        hiddenPhrase = new StringBuilder(generateHiddenPhrase(phrase));
+        hiddenPhrase = new StringBuilder(generateHiddenPhrase());
         previousGuesses.clear();
 
         int lives = 5;
@@ -103,7 +113,7 @@ public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
         int maxLetters = phrase.replaceAll("[^a-zA-Z]", "").length();
         int score = (revealedLetters == maxLetters) ? 100 : (int) ((double) revealedLetters / maxLetters * 100);
 
-        // Return the GameRecord with calculated score
+        // Return the GameRecord with the calculated score
         GameRecord record = new GameRecord(score, currentPlayer.playerId());
 
         // Move to the next player for the next game
@@ -112,18 +122,17 @@ public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
     }
 
 
-
     /**
-     * For a new game it will return true or false
+     * Determines if the game should continue to another round
      */
     @Override
     public boolean playNext() {
-        return !phrases.isEmpty();
+        return !gameData.isEmpty();
     }
 
 
     /**
-     * Main method to run a set of games with AI players
+     * Main method to run a set of games
      */
     public static void main(String[] args) {
         // Create a list of AI players
@@ -147,7 +156,7 @@ public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
 
 
     /**
-     * Overriding the toString for rubric and if needed to print for debug
+     * Overriding the toString for rubric
      */
     @Override
     public String toString() {
@@ -159,7 +168,7 @@ public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
 
 
     /**
-     * Overriding the equals for rubric and if needed for debug
+     * Overriding the equals for rubric
      */
     @Override
     public boolean equals(Object obj) {

@@ -3,16 +3,14 @@ import java.util.Scanner;
 public class WheelOfFortuneUserGame extends WheelOfFortuneInheritance {
 
     private final Scanner scanner;
-    private boolean isFirstGame;
 
 
     /**
-     * Constructor for the game
+     * Constructor
      */
     public WheelOfFortuneUserGame() {
         super();
         this.scanner = new Scanner(System.in);
-        this.isFirstGame = true;
     }
 
 
@@ -34,7 +32,7 @@ public class WheelOfFortuneUserGame extends WheelOfFortuneInheritance {
 
 
     /**
-     * Code to get the guess from the user and check
+     * Gets the guess from the user
      */
     @Override
     protected char getGuess(String previousGuesses) {
@@ -55,16 +53,32 @@ public class WheelOfFortuneUserGame extends WheelOfFortuneInheritance {
 
 
     /**
-     * Code to start the game with lives and call other methods
+     * Get the next guess from the current player
+     */
+    protected String getGuess() {
+        while (true) {
+            System.out.print("Guess a Letter: ");
+            String userInput = scanner.nextLine().trim().toLowerCase();
+            if (userInput.length() == 1 && Character.isLetter(userInput.charAt(0))) {
+                return userInput;
+            } else {
+                System.out.println("Invalid input. Please enter a single letter.");
+            }
+        }
+    }
+
+
+    /**
+     * Plays the game, handling the game loop
      */
     @Override
     public GameRecord play() {
-        phrase = selectRandomPhrase();
+        phrase = selectRandomItem(); // Use GuessingGame's method to select a phrase
         if (phrase == null) {
             System.out.println("No more phrases available. Ending game.");
             return null;
         }
-        hiddenPhrase = new StringBuilder(generateHiddenPhrase(phrase));
+        hiddenPhrase = new StringBuilder(generateHiddenPhrase());
         previousGuesses.clear();
 
         int lives = 5;
@@ -102,14 +116,10 @@ public class WheelOfFortuneUserGame extends WheelOfFortuneInheritance {
 
 
     /**
-     * Code to ask user to play another game
+     * Determines if the game should continue to another round
      */
     @Override
     public boolean playNext() {
-        if (isFirstGame) {
-            isFirstGame = false;
-            return true;
-        }
         System.out.print("Do you want to play another game? (yes/no): ");
         String response = scanner.nextLine().trim().toLowerCase();
         return response.equals("yes") || response.equals("y");
@@ -125,7 +135,7 @@ public class WheelOfFortuneUserGame extends WheelOfFortuneInheritance {
                 "phrase='" + phrase + '\'' +
                 ", hiddenPhrase=" + hiddenPhrase +
                 ", previousGuesses=" + previousGuesses +
-                ", remainingPhrases=" + phrases.size() +
+                ", remainingPhrases=" + gameData.size() +
                 '}';
     }
 
