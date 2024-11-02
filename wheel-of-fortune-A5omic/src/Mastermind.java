@@ -3,11 +3,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Mastermind extends GuessingGame {
-    private static final int CODESIZE = 4;
+    private static final int CODESIZE = 6;
     private static final int MAX_ATTEMPTS = 10;
-    private static final String COLORS = "RGBY"; // R, G, B, Y, O, P
+    private static final String COLORS = "RGBYOP";
     private String secretCode;
     private final Scanner scanner;
+    private boolean isFirstGame;
 
 
     /**
@@ -16,6 +17,7 @@ public class Mastermind extends GuessingGame {
     public Mastermind() {
         super(null);
         this.scanner = new Scanner(System.in);
+        this.isFirstGame = true;
         generateSecretCode();
     }
 
@@ -38,7 +40,7 @@ public class Mastermind extends GuessingGame {
      */
     @Override
     protected String getGuess() {
-        System.out.print("Enter your guess (e.g., 'RGRY'): ");
+        System.out.print("Enter your guess (like the following: RGBYOP): ");
         String guess = scanner.nextLine().toUpperCase().trim();
         if (guess.length() == CODESIZE && guess.chars().allMatch(c -> COLORS.indexOf(c) >= 0)) {
             return guess;
@@ -54,6 +56,10 @@ public class Mastermind extends GuessingGame {
      */
     @Override
     public boolean playNext() {
+        if (isFirstGame) {
+            this.isFirstGame = false;
+            return true;
+        }
         System.out.print("Do you want to play another game? (yes/no): ");
         String response = scanner.nextLine().trim().toLowerCase();
         return response.equals("yes") || response.equals("y");
