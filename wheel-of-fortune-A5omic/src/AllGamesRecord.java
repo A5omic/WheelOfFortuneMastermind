@@ -52,7 +52,7 @@ public class AllGamesRecord {
      */
     public List<GameRecord> highGameList(int n) {
         return records.stream()
-                .sorted(Comparator.reverseOrder())
+                .sorted(Comparator.comparingInt(GameRecord::getScore).reversed())
                 .limit(n)
                 .collect(Collectors.toList());
     }
@@ -64,7 +64,7 @@ public class AllGamesRecord {
     public List<GameRecord> highGameList(String playerId, int n) {
         return records.stream()
                 .filter(record -> record.getPlayerId().equals(playerId))
-                .sorted(Comparator.reverseOrder())
+                .sorted(Comparator.comparingInt(GameRecord::getScore).reversed())
                 .limit(n)
                 .collect(Collectors.toList());
     }

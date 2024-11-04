@@ -4,6 +4,7 @@ public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
 
     private final List<WheelOfFortunePlayer> players;
     private int currentPlayerIndex;
+    private static int totalPlays = 0;
 
 
     /**
@@ -57,6 +58,7 @@ public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
      */
     @Override
     public GameRecord play() {
+        totalPlays += 1;
         // Initialize game state
         phrase = selectRandomPhrase();
         if (phrase == null) {
@@ -127,9 +129,9 @@ public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
      */
     @Override
     public boolean playNext() {
-        return !gameData.isEmpty();
+        int totalPlaysLimit = players.size() * gameData.size();
+        return totalPlays < totalPlaysLimit;
     }
-
 
     /**
      * Main method to run a set of games
@@ -148,8 +150,8 @@ public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
 
         // Display results using AllGamesRecord methods
         System.out.println("Average Score: " + record.average());
-        System.out.println("Top 3 Games: ");
-        for (GameRecord gr : record.highGameList(3)) {
+        System.out.println("Top 12 Games: ");
+        for (GameRecord gr : record.highGameList(totalPlays)) {
             System.out.println("Player: " + gr.getPlayerId() + ", Score: " + gr.getScore());
         }
     }
@@ -160,10 +162,7 @@ public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
      */
     @Override
     public String toString() {
-        return "WheelOfFortuneAIGame{" +
-                "players=" + players +
-                ", currentPlayerIndex=" + currentPlayerIndex +
-                '}';
+        return "WheelOfFortuneAIGame{" + "players=" + players + ", currentPlayerIndex=" + currentPlayerIndex + '}';
     }
 
 

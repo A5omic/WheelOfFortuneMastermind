@@ -48,7 +48,8 @@ public abstract class GuessingGame extends Game {
         }
         Random rand = new Random();
         int index = rand.nextInt(gameData.size());
-        String selectedItem = gameData.remove(index); // Remove to prevent reuse
+//        String selectedItem = gameData.remove(index);
+        String selectedItem = gameData.get(index);
         return selectedItem;
     }
 
