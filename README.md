@@ -3,14 +3,13 @@
 
 **Overview:**
 
-Within this project we were to build the fan favorite game wheel of fortune. We were provided with some starter code that extracts some sayings from a text file, and were tasked with creating four different versions of the game to show our understandings of java. The game is a command-line simplified version of [Wheel of Fortune](https://davidwolber.notion.site/WOF-and-Mastermind-with-Inheritance-Project-fe031ecd073b4780b70bd64add68f2c5). The game generates a phrase, e.g., "The only thing to fear is fear itself" and shows the user the phrase with all letters hidden, e.g., "*** **** ***** ** **** ** **** ******". The user guesses a letter. If the letter is in the phrase, all instances are displayed. If it is not, a wrong guess is counted. So if 'r' were guessed, the new hidden phrase would be *** **** ***** ** ***r ** ***r ******.
-In 
+Within this project we were to build the fan favorite game wheel of fortune. We were provided with some starter code that extracts some sayings from a text file, and were tasked with creating four different versions of the game to show our understandings of java. The game is a command-line simplified version of [Wheel of Fortune](https://davidwolber.notion.site/WOF-and-Mastermind-with-Inheritance-Project-fe031ecd073b4780b70bd64add68f2c5). The game generates a phrase, e.g., "The only thing to fear is fear itself" and shows the user the phrase with all letters hidden, e.g., "*** **** ***** ** **** ** **** ******". The user guesses a letter. If the letter is in the phrase, all instances are displayed. If it is not, a wrong guess is counted. So if 'r' were guessed, the new hidden phrase would be *** **** ***** ** ***r ** ***r ******. In this new version for project 4 I take on the idea of abstract classes and interfaces that are used throughout the files in order to make good object oriented reusable code. The goal is to add that all into the previous project as well as build up a new mastermind project that falls into this guessing gamne class.
 
 
 
 **App Development:**
 
-For the user to deploy the app, they can run it in one of two ways if they have any sort of IDE, such as InteliJ Then they can just download the code from GitHub open up the project in InteliJ and then, from there, select which version of wheel of Fortune they would like to play in this case there is the bot version the novice version the object-oriented version and the structured version and the extra credit version and then just click the run button up in the top right corner.
+For the user to deploy the app, they can run it in one of two ways if they have any sort of IDE, such as InteliJ Then they can just download the code from GitHub open up the project in InteliJ and then, from there, select which version of wheel of Fortune they would like to play in this case there is the user version where they can play games themselves, or the ai version where there are three bots one that does random guessing, another the does vowel guessing first, and another that does common letters guessing first, from there if you also want to view the part 2 code you can play mastermind.
 
 
 If the user does not have an ID, they can still run the program as long as they have Java installed on there computer to do this you would download the program open up a terminal or command prompt window cd Into the directory where the Java files are located most likely /downloads/wheeloffortune/src/ And then they can run the Java compile command, and the Java run command:
@@ -27,31 +26,45 @@ And from there, they can play the game in the command prompt window. Enjoy!
 
 **Development Process:**
 
-In the development process of this app, I started off with the given code snippet and from there read through the initial instructions where we were to build the wheel of Fortune game all within the main method. this first build of the app was overall fairly straightforward. The biggest thing that I had an issue with personally was figuring out that I should just read the whole prompt instead of just reading a snippet of the prompt so I would read a snippet of the prompt and it would say the phrase needs to be hidden so I would then go and build the logic for the phrase to be hidden, but then I would read further on that we would need to include spaces just normal white spaces, which makes sense. It was just an error on my part by not reading the full prompt before I started coding. 
+In the development process of this app, I started off with the previous given code from the projects and then went on from there, making sure to read all the way thorugh the documentation and writing down all of the classes I thought were needed and would be important. From there I then went on and started creating the overarching classes that would be used throughout the game such as the Game class, the AllGamesRecord class and so on, so that I had the baseline classess that I needed all filled out and made. 
 
 
-Same with all of the other versions in the wheel of Fortune methods and object oriented version I would read that we had to use methods and objects for the object oriented one and I would just go and coat it up and did not realize that we needed to have specific names, such as random phrase, get gas for the methods one and so on so what I’m realizing from this project is that my biggest enemy is myself and I need to read the prompt fully before I go on and start to code.
+From there I then went on to fill out the different files and start to switch over files to implement the new abstract classess, from there I used the built in add methods button in intelij to really get a feel for what the code would look like by having it craft all of the method headers so I could see all that was needed to be filled in, and from there it was just coding out each of the fucntions and trial and error to get the final product to run.
+
+
+For part 2 of the code I followed the same structor of the code and ideas where I started with creating the guessing game class and then worked on implementing it into my already made classes. Once I has it implemented I then moved over to mastermind and worked on coding both of those simulatniously.
 
 
 Some of the key concepts that I learned through this project are:
 
 
-Overall, I feel like my algorithm for checking. The characters of the user entered in works well. I think there might be a way to make it a little bit better I would say or maybe even faster because right now I’m just using a four loop to basically scan through each character in the hidden phrase see if they match and if they do match then show that current character I feel like there is probably a better way to basically read it all at once instead of just going through each individual character, but it does work and that was what I’m happy about most.
+Overall, I feel like my knowledge for how classess work with eachother has been expanded, as well as my knowledge on inheritence. I work a lot daily with code but they are normally different projects, so there is not much use of inheritence within the code, so this was a great learning area for me within this project.
 
 
 
 
 **Completed:**
+P1:
 
-WheelOfFortuneMain
+AllGamesRecord'
 
-WheelOfFortuneMethods
+FrequentLetterPlayer
 
-WheelOfFortuneObject
+Game
 
-WheelOfFortuneBot
+GameRecord
 
-Extra Credit - Added a complete phrase guess
+RandomGuessPlayer
+
+VowelFirstPlayer
+
+WheelOfForutneAIGame
+
+WheelOfFortuneInheritance
+
+WheelOfFortunePlayer
+
+WheelOfFortuneUserGame
 
 
 
