@@ -113,19 +113,22 @@ public abstract class GuessingGame extends Game {
         AllGamesRecord allGamesRecord = new AllGamesRecord();
         int gameCount = 1;
 
-        // Run the first game without calling playNext
-        do {
-            System.out.println("Playing game " + gameCount);
-            GameRecord record = play();
+        System.out.printf("Playing game %d%n", gameCount);
+        GameRecord record = play();
+
+        if (record != null) {
+            allGamesRecord.add(record);
+        }
+
+        while (playNext()) {
+            System.out.printf("Playing game %d%n", ++gameCount);
+            record = play();
+
             if (record != null) {
                 allGamesRecord.add(record);
             }
-            gameCount++;
-
-            // Call playNext only after the first game
-        } while (playNext());
-
-        System.out.println("All games completed. Total games played: " + (gameCount - 1));
+        }
+        System.out.printf("All games completed. Total games played: %d%n", gameCount);
         return allGamesRecord;
     }
 }

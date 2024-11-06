@@ -137,7 +137,7 @@ public class WheelOfFortuneAIGame extends WheelOfFortuneInheritance {
 
         // Display results using AllGamesRecord methods
         System.out.println("Average Score: " + record.average());
-        System.out.println("Top 12 Games: ");
+        System.out.println("Top Games: ");
         for (GameRecord gr : record.highGameList(totalPlays)) {
             System.out.println("Player: " + gr.getPlayerId() + ", Score: " + gr.getScore());
         }
