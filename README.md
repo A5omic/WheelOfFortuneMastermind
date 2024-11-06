@@ -89,5 +89,5 @@ The only tough debug was mastermind as this was a new game that we had to build,
 **Test Video:**
 
 Link (Might have to download the video to play it due to size): 
-[Video1](https://drive.google.com/file/d/1TU4-XhrIdklsY5ZDt6dgd9z0FIyLPvBp/view?usp=sharing)
+[Video1](https://drive.google.com/file/d/1m6kehxW8Rp-VDWV4b4NRAoqHJqzmooOc/view?usp=sharing)
 [Video2](https://drive.google.com/file/d/1TU4-XhrIdklsY5ZDt6dgd9z0FIyLPvBp/view?usp=sharing)
