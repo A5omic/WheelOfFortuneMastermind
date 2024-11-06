@@ -66,21 +66,22 @@ WheelOfFortunePlayer
 
 WheelOfFortuneUserGame
 
+P2:
+
+Mastermind
+
+GuessingGame
+
 
 
 
 **Test Plan:**
 
-For my test plan Michael to start was just a test the basics so to start I would see if a user entered in one character two characters or more would then receive an error in which they did which is expected and they get a nice print out statement, telling them that they should only be entering in one character at a time.
+For my test plan I started by basically working through the game, since I started with a working game it qas quite easy to tell when my game was not working as expected, so if I made a change and something changede that was not suppose to change I would go back and make the needed edits to correct it. I followed this approach for almost every class and would work therough each of the different classes that were needed. 
 
+Wehn it came to the ai game I started with a simple guesser and from there then through of ways to improve it ie guessing vowels first and random guessing and so on. This enabled me to always have a test approach where I would be able to test the changes as I was making them making the debug quite easy compared to other projects becuase I knew what I was expecting.
 
-Next up, I then wanted to see if the user didn’t enter in anything and just tried to click enter they should also then get a nice message asking them to please enter in a character. And then from there, I then knew that I was getting one and only one character so from there I took the character and then would check through the Phrase to see if any of the characters lined up another test that had to be done here was whether or not the character was entered in in caps or in lowercase so I would basically call the tolowercase function on the character So that the cases of the characters I’m trying to match are all the same.
-
-
-Lastly, one of the trickier things to do was to see if the user had already guessed that certain character, and if so, not to subtract a life to do this I set up a list of characters and basically every single time the user guest I would see if the character that the guest is within the list if it is, I would let them know and not subtract the life and if it was not, then the game would continue on, but I would make sure to append the character that they just guessed to the list.
-
-
-And then, lastly, for testing I just played the game multiple times trying all sorts of different edge cases entering in multiple spaces, random characters and different things to see if I could get it to break or throw any errors.
+The only tough debug was mastermind as this was a new game that we had to build, but looking up how the game is played onlin ehelped a lot to clearly understand what was expected.
 
 
 
